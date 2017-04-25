@@ -35,13 +35,10 @@ def already_exists(post, db):
 def add_to_database(list_of_posts, database_path = 'posts.db'):
 	db = sqlite3.connect(database_path)
 	for post in list_of_posts:
-		try:
-			if not already_exists(post, db):
-				db.execute("INSERT INTO posts VALUES(?,?,?,?);", post)
-			else:
-				db.execute("UPDATE posts SET score = ? where id = ?", [post.score, post.id])
-		except sqlite3.IntegrityError:
-			pass
+		if not already_exists(post, db):
+			db.execute("INSERT INTO posts VALUES(?,?,?,?);", post)
+		else:
+			db.execute("UPDATE posts SET score = ? where id = ?", [post.score, post.id])
 
 	db.commit()
 
