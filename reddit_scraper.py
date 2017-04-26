@@ -30,7 +30,7 @@ def collect_data(json_loads):
 
 def already_exists(post, db):
 	cursor = db.execute("SELECT COUNT(*) FROM posts where id = ?", [post.id])
-	return bool(cursor.fetchone()) 
+	return cursor.fetchone()[0]
 
 def add_to_database(list_of_posts, database_path = 'posts.db'):
 	db = sqlite3.connect(database_path)
